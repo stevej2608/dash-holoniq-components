@@ -1,0 +1,11 @@
+node_modules
+lib
+*.egg-info
+dash_holoniq_components/bundle.js
+dash_holoniq_components/metadata.json
+*__pycache__
+*.pyc
+dist
+changelog.tmp
+dash_holoniq_components/_components/
+.sass-cache

@@ -1,0 +1,19 @@
+
+/* Position padlock icon on password inputs */
+
+.errspan {
+  float: right;
+  margin-right: 6px;
+  margin-top: -26px;
+  position: relative;
+  z-index: 2;
+  color: darkgrey;
+  width: 20px;
+}
+
+
+/* Stop the BS4 validation glyph as it mangles the padlock icon */
+
+.form-control.icon {
+	background-image: none !important
+}
