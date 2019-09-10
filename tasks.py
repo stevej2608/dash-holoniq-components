@@ -52,7 +52,7 @@ def release(ctx, version):
     """
     check_prerequisites()
     info(f"Releasing version {version} as full release")
-    set_documentation_version(version)
+    # set_documentation_version(version)
     release_notes_lines = get_release_notes(version)
 
     if release_notes_lines is None:

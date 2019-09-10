@@ -1,2 +1,7 @@
-include dash_holoniq_components/_components/dash_bootstrap_components.min.js
+include dash_holoniq_components/_components/dash_holoniq_components.min.js
 include dash_holoniq_components/_components/metadata.json
+include landing-page.md
+include README.md
+include LICENSE
+include package.json
+include usage.py

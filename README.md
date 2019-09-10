@@ -5,7 +5,7 @@ The following components are available:
 **Alert** The Alert component is hidden if it has no children. When children are injected the Alert 
 component sets its style to become visible
 
-<p align="center"><img src="doc/img/alert-example.png"></p>
+<p align="center"><img src="docs/img/alert-example.png"></p>
 
 
 **ButtonLink** Allows you to create a clickable link within a multi-page app in
@@ -19,7 +19,7 @@ reported by the a submit action, is available in a Dash callback via the compone
 
 **InputWithIcon** Adds a font awesome glyph and tooltip to the end of a standard input box
 
-<p align="center"><img src="doc/img/input-with-icon-example.png"></p>
+<p align="center"><img src="docs/img/input-with-icon-example.png"></p>
 
 ```
 import dash_holoniq_components as dhc
@@ -40,7 +40,7 @@ were callbacks linked to dynamic content are difficult to realise.
 
 **PageTitle** Sets the page title:
 
-<p align="center"><img src="doc/img/page-title-example.png"></p>
+<p align="center"><img src="docs/img/page-title-example.png"></p>
 
 
 ```
@@ -56,7 +56,7 @@ app.layout = html.Div([
 
 **PasswordWithShow** Password input with a show/hide icon that can be clicked to reveal the password
 
-<p align="center"><img src="doc/img/password-example.png"></p>
+<p align="center"><img src="docs/img/password-example.png"></p>
 
 **Redirect**  Allows the window history/location to be set to a new value
 
@@ -139,6 +139,7 @@ usage.py                    : Dash/Flask python demo entry point
 utils                       : odds & sods to support usage.py
 ```
 
+## Acknowledgment
 
-
-
+A big thankyou to the [dash-bootstrap-components](https://github.com/facultyai/dash-bootstrap-components)
+team. This projects layout and build system is a close copy of the one developed by them.
