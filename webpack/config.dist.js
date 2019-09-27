@@ -38,5 +38,10 @@ module.exports = {
     libraryTarget: 'window',
     path: BUILD_PATH,
     filename: LIBRARY_NAME + '.min.js'
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   }
 };

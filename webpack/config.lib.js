@@ -52,5 +52,10 @@ module.exports = {
     libraryTarget: 'umd',
     path: path.join(directories.ROOT, 'lib/'),
     filename: LIBRARY_NAME + '.min.js'
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   }
 };
