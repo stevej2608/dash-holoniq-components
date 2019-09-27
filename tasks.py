@@ -1,6 +1,8 @@
 import os
+import json
 import tempfile
 from pathlib import Path
+from setuptools import find_packages
 from shutil import which
 from subprocess import call
 
@@ -8,6 +10,8 @@ import semver
 from invoke import run as invoke_run
 from invoke import task
 from termcolor import cprint
+
+PACKAGE_NAME = 'dash_holoniq_components'
 
 VERSION_TEMPLATE = """__version__ = "{version_string}"
 """
@@ -52,7 +56,6 @@ def release(ctx, version):
     """
     check_prerequisites()
     info(f"Releasing version {version} as full release")
-    # set_documentation_version(version)
     release_notes_lines = get_release_notes(version)
 
     if release_notes_lines is None:
@@ -68,34 +71,21 @@ def release(ctx, version):
     build_publish(version)
 
     info("Committing version changes")
+
     run(f"git checkout -b release-{version}")
-    run(
-        "git add package.json package-lock.json "
-        "docs/requirements.txt "
-        "dash_holoniq_components/_version.py"
-    )
+    run(f"git add {PACKAGE_NAME}/_version.py")
     run(f'git commit -m "Bump version to {version}"')
+
     info(f"Tagging version {version} and pushing to GitHub")
-    run(f'git tag -a "{version}" -F changelog.tmp')
-    run(f"git push origin release-{version} --tags")
+
+    run(f'git tag -a {version} -F changelog.tmp')
+    run('call git checkout master')
+    run(f'git merge release-{version}')
+    run(f'git branch -D release-{version}')
+
+    run(f"git push origin master --tags")
 
 
-@task
-def documentation(ctx):
-    """
-    Push documentation to Heroku
-    """
-    info("Pushing documentation to Heroku")
-    run("git subtree push --prefix docs/ heroku master")
-
-
-@task(
-    documentation,
-    help={
-        "version": "Version number to finalize. Must be "
-        "the same version number that was used in the release."
-    },
-)
 def postrelease(ctx, version):
     """
     Finalise the release
@@ -115,8 +105,26 @@ def postrelease(ctx, version):
     run('git commit -m "Back to dev"')
     run(f"git push origin postrelease-{version}")
 
-
 def build_publish(version):
+
+    def clean():
+        paths_to_clean = ["dash_holoniq_components/_components", "dist/", "lib/"]
+        for path in paths_to_clean:
+            run(f"rm -rf {path}")
+
+    def release_python_sdist():
+        run("rm -f dist/*")
+        run("python setup.py sdist")
+        info("PyPI credentials:")
+        invoke_run("twine upload dist/*", echo=True)
+
+    def build_js():
+        os.chdir(JS_DIR)
+        try:
+            run("npm run build:lib")
+        finally:
+            os.chdir(HERE)
+
     info("Cleaning")
     clean()
     info("Updating versions")
@@ -125,30 +133,8 @@ def build_publish(version):
     info("Building JavaScript components")
     build_js()
     info("Building and uploading Python source distribution")
-    info("PyPI credentials:")
+    run("npm run build-dist")
     release_python_sdist()
-
-
-def clean():
-    paths_to_clean = ["dash_holoniq_components/_components", "dist/", "lib/"]
-    for path in paths_to_clean:
-        run(f"rm -rf {path}")
-
-
-def build_js():
-    os.chdir(JS_DIR)
-    try:
-        run("npm install")
-        run("npm publish")
-    finally:
-        os.chdir(HERE)
-
-
-def release_python_sdist():
-    run("rm -f dist/*")
-    run("python setup.py sdist")
-    invoke_run("twine upload dist/*")
-
 
 def set_pyversion(version):
     version = normalize_version(version)
@@ -167,19 +153,6 @@ def set_jsversion(version):
             package_json[iline] = f'  "version": "{version}",\n'
     with open(package_json_path, "w") as f:
         f.writelines(package_json)
-
-
-def set_documentation_version(version):
-    version = normalize_version(version)
-    docs_requirements_path = HERE / "docs" / "requirements.txt"
-    with docs_requirements_path.open() as f:
-        docs_requirements = f.readlines()
-    for iline, line in enumerate(docs_requirements):
-        if "dash_holoniq_components" in line:
-            updated_line = f"dash_holoniq_components=={version}\n"
-            docs_requirements[iline] = updated_line
-    with open(docs_requirements_path, "w") as f:
-        f.writelines(docs_requirements)
 
 
 def get_release_notes(version):
@@ -201,7 +174,10 @@ def get_release_notes(version):
 
 def open_editor(initial_message):
     editor = os.environ.get("EDITOR", "vim")
+
     tmp = tempfile.NamedTemporaryFile(suffix=".tmp")
+    tmp.close()
+
     fname = tmp.name
 
     with open(fname, "w") as f:
@@ -214,7 +190,6 @@ def open_editor(initial_message):
         lines = f.readlines()
 
     return lines
-
 
 def check_prerequisites():
     for executable in ["twine", "npm", "dash-generate-components"]:
@@ -232,10 +207,10 @@ def normalize_version(version):
     version_string = str(version_info)
     return version_string
 
-
 def run(command, **kwargs):
+    print(f'{command}')
     result = invoke_run(command, hide=True, warn=True, **kwargs)
-    if result.exited != 0:
+    if (result.exited is not None) and (result.exited != 0):
         error(f"Error running {command}")
         print(result.stdout)
         print()

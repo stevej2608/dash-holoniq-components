@@ -73,8 +73,6 @@ To run the Python demo
 
 Then open [http://localhost:8050](http://localhost:8050)
    
-
-
 ## Building
 
 To build the component source you must have python and node installed on 
