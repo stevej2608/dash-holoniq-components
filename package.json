@@ -52,7 +52,7 @@
     "mem": ">=4.0.0",
     "mkdirp": "^0.5.1",
     "move-cli": "^1.2.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.14.3",
     "react-docgen": "^2.21.0",
     "rimraf": "^2.6.2",
