@@ -11,7 +11,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-   }
+  }
 
   /**
    * Iterate over form fields
@@ -21,18 +21,25 @@ class Form extends Component {
 
   getFormFields(elements) {
     const obj = {}
-    for(let i = 0 ; i < elements.length ; i++){
-      const item  = elements.item(i);
+    for (let i = 0; i < elements.length; i++) {
+
+      const item = elements.item(i);
 
       if (!item) continue;
-  
+
       if (item.type === 'checkbox') {
         obj[item.id] = item.checked;
         continue;
       }
-  
+
+      if (item.type === 'radio') {
+        if (item.checked) obj[item.name] = item.value;
+        continue;
+      }
+
       if (item.name) obj[item.name] = item.value;
     }
+    
     return obj;
   }
 
@@ -42,14 +49,14 @@ class Form extends Component {
    * @param e 
    */
 
-  handleSubmit(e)  {
+  handleSubmit(e) {
     if (this.props.preventDefault) e.preventDefault();
     const form_data = this.getFormFields(e.currentTarget.elements);
-    this.props.setProps({form_data})
+    this.props.setProps({ form_data })
   }
- 
+
   render() {
-    const { children, loading_state,  ...otherProps } = this.props;
+    const { children, loading_state, ...otherProps } = this.props;
     return (
       <form
         {...otherProps}
