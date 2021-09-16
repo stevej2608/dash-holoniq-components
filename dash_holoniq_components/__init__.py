@@ -1,29 +1,87 @@
-import os
-import sys
+from __future__ import print_function as _
 
-from . import _components
-from ._components import *  # noqa
-from ._version import __version__  # noqa
+import os as _os
+import sys as _sys
+import json
 
-_current_path = os.path.dirname(os.path.abspath(__file__))
+import dash as _dash
 
-METADATA_PATH = os.path.join(_current_path, "_components", "metadata.json")
+# noinspection PyUnresolvedReferences
+from ._imports_ import *
+from ._imports_ import __all__
 
-_js_dist = [
-    {
-        "relative_package_path": (
-            "_components/dash_holoniq_components.min.js"
-        ),
-        "namespace": "dash_holoniq_components",
-    }
-]
+if not hasattr(_dash, '__plotly_dash') and not hasattr(_dash, 'development'):
+    print('Dash was not successfully imported. '
+          'Make sure you don\'t have a file '
+          'named \n"dash.py" in your current directory.', file=_sys.stderr)
+    _sys.exit(1)
+
+_basepath = _os.path.dirname(__file__)
+_filepath = _os.path.abspath(_os.path.join(_basepath, 'package-info.json'))
+with open(_filepath) as f:
+    package = json.load(f)
+
+package_name = package['name'].replace(' ', '_').replace('-', '_')
+__version__ = package['version']
+
+_current_path = _os.path.dirname(_os.path.abspath(__file__))
+
+_this_module = _sys.modules[__name__]
+
+async_resources = []
+
+_js_dist = []
+
+_js_dist.extend(
+    [
+        {
+            "relative_package_path": "async-{}.js".format(async_resource),
+            "external_url": (
+                "https://unpkg.com/{0}@{2}"
+                "/{1}/async-{3}.js"
+            ).format(package_name, __name__, __version__, async_resource),
+            "namespace": package_name,
+            "async": True,
+        }
+        for async_resource in async_resources
+    ]
+)
+
+# TODO: Figure out if unpkg link works
+_js_dist.extend(
+    [
+        {
+            "relative_package_path": "async-{}.js.map".format(async_resource),
+            "external_url": (
+                "https://unpkg.com/{0}@{2}"
+                "/{1}/async-{3}.js.map"
+            ).format(package_name, __name__, __version__, async_resource),
+            "namespace": package_name,
+            "dynamic": True,
+        }
+        for async_resource in async_resources
+    ]
+)
+
+_js_dist.extend(
+    [
+        {
+            'relative_package_path': 'dash_holoniq_components.dev.js',
+    
+            'namespace': package_name
+        },
+        {
+            'relative_package_path': 'dash_holoniq_components.dev.js.map',
+    
+            'namespace': package_name,
+            'dynamic': True
+        }
+    ]
+)
 
 _css_dist = []
 
 
-for _component_name in _components.__all__:
-    _component = getattr(_components, _component_name)
-    _component._js_dist = _js_dist
-    _component._css_dist = _css_dist
-
-
+for _component in __all__:
+    setattr(locals()[_component], '_js_dist', _js_dist)
+    setattr(locals()[_component], '_css_dist', _css_dist)

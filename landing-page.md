@@ -30,7 +30,9 @@ were callbacks linked to dynamic content are difficult to realise.
 
 **PasswordWithShow** Password input with a show/hide icon that can be clicked to reveal the password
 
-**Redirect**  Allows the window history/location to be set to a new value
+**Location** A modified version of *dash-core-components* Location component. Allows multiple instances 
+to co-exist. In the *dash-core-components* version the last instance is the only one 
+to get history event notifications.
 
 ## Installation
 

@@ -1,99 +1,43 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "2. test.py",
-            "type": "python",
-            "request": "launch",
-            "pythonPath": "${config:python.pythonPath}",
-            "program": "${workspaceFolder}/test.py",
-            "args": [
-                "./src/components dash_holoniq_components/_components",
-                "xxxx"
-            ],
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "justMyCode": false
-        },
-
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "1. Debug JS Demo",
-            "url": "http://localhost:8888/index.html",
-            "sourceMaps": true,
-            // "webRoot": "${workspaceFolder}/dash_holoniq_components",
-            "sourceMapPathOverrides": {
-                "webpack://dash_holoniq_components/./*": "${workspaceRoot}/src/*",
-            }
-        },
-        {
-            "name": "2. Debug usage.py",
-            "type": "python",
-            "request": "launch",
-            "pythonPath": "${config:python.pythonPath}",
-            "program": "${workspaceFolder}/usage.py",
-            "args": [
-                "runserver"
-            ],
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "justMyCode": false
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "3. Jest All",
-            "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": [
-                "--runInBand",
-                "--verbose"
-            ],
-            "console": "internalConsole",
-            "outputCapture": "std",
-            "windows": {
-                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-            }
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "4. Jest Redirect",
-            "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": [
-                "Redirect",
-                "--runInBand",
-                "--verbose",
-            ],
-            "console": "internalConsole",
-            "outputCapture": "console",
-            "windows": {
-                "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-            }
-        },
-
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "5. Jest Current File",
-            "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": [
-              "${fileBasenameNoExtension}",
-              "--runInBand",
-              "--verbose",
-            ],
-            "console": "internalConsole",
-            "internalConsoleOptions": "neverOpen",
-            "disableOptimisticBPs": true,
-            "windows": {
-              "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-            }
-          }
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
 
 
+    // Debug component JS source. Start dash app in terminal window
+    // then launch debugger
 
-    ]
+    {
+      "type": "pwa-chrome",
+      "name": "1. Debug component JS in Browser",
+      "request": "launch",
+      "url": "http://default:8050/",
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}",
+      "resolveSourceMapLocations": [
+        "dash_holoniq_components/**/*.js"
+      ],
+    },
+
+    // Debug Dash app python source
+
+    {
+      "name": "2. Debug usage.py",
+      "type": "python",
+      "request": "launch",
+      "python": "${command:python.interpreterPath}",
+      "program": "${workspaceFolder}/usage.py",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      // "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": ".*visit http://(.*)",
+        "uriFormat": "http://%s",
+        "action": "openExternally"
+      }
+    },
+  ]
 }

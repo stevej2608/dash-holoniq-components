@@ -1,4 +1,4 @@
-# Dash Holoniq Components
+## Dash Holoniq Components
 
 The following components are available:
 
@@ -16,6 +16,13 @@ been clicked. `ButtonLink` can be enabled/disabled allowing conditional control 
 **Form** The `Form` components normal submit action can be inhibited. The form data, as it would be 
 reported by the a submit action, is available in a Dash callback via the components `form_data` attribute.
 
+```
+app.layout = dhc.Form(formFields(), id="form", preventDefault=True),
+
+@app.callback([...], [Input("form", "form_data")])
+def _callback(form_data):
+  pass
+```
 
 **InputWithIcon** Adds a font awesome glyph and tooltip to the end of a standard input box
 
@@ -24,32 +31,52 @@ reported by the a submit action, is available in a Dash callback via the compone
 ```
 import dash_holoniq_components as dhc
 
-app.layout = html.Div([
-    dhc.InputWithIcon(type='name', id ='name', icon='fa fa-user', tooltip="Hi Big Joe")
+app.layout = html.Div
+    dhc.InputWithIcon(...)
 ])
 
 ```
 
-**LayoutRouter** The children of LayoutRouter are each wrapped in a Div that is
+**LayoutRouter** The children of `LayoutRouter` are each wrapped in a Div that is
 is hidden/shown based on the current value of the LayoutRouter 'switch' attribute.
 
-The advantage of `LayoutRouter` over the [standard](https://dash.plot.ly/urls) approach to 
-dynamic layout is that **ALL** the applications layout is rendered, but hidden, when the
-Dash application starts. `LayoutRouter` overcomes the problem with the `standard` approach 
-were callbacks linked to dynamic content are difficult to realise.
+The advantage of `LayoutRouter` over the standard dynamic content is that **ALL** the applications 
+layout is present in the DOM, but hidden, when the Dash application is first loaded. This means
+that Dash callbacks can reference component ids without reference errors being reported.
+
+Switching between pages using `LayoutRouter` needs minimal server communication resulting in
+the fastest possible page updates.
+
+```
+import dash_holoniq_components as dhc
+
+app.layout = html.Div([
+      dhc.Location(id='loc'),
+      dhc.LayoutRouter(children, routes=routes, id='router')
+    ]
+
+@app.callback([Output('router', 'switch')], [Input('loc', 'pathname')])
+def _router_callback(pathname):
+    route = 'default'
+
+    if pathname:
+        pathname = pathname[1:]
+        if pathname in page_layouts:
+            route = pathname
+
+    return route
+```
 
 **PageTitle** Sets the page title:
 
 <p align="center"><img src="docs/img/page-title-example.png"></p>
 
-
 ```
-import dash_html_components as html
+from dash import html
 import dash_holoniq_components as dhc
 
 app.layout = html.Div([
-    dhc.PageTitle(title='My Site - Summary'),
-    html.H2('My Page')
+    dhc.PageTitle(title='My Site', id='title')
 ])
 
 ```
@@ -58,14 +85,18 @@ app.layout = html.Div([
 
 <p align="center"><img src="docs/img/password-example.png"></p>
 
-**Redirect**  Allows the window history/location to be set to a new value
+**Location** 
 
-## Usage Demo
+A modified version of *dash-core-components* Location component. Allows multiple instances 
+to co-exist. In the *dash-core-components* version the last instance is the only one 
+to get history event notifications.
 
-The demo is a simple signin form and user profile that makes use of all the components. 
+### Usage Demo
 
-To signin enter a name and password. The password will be checked to see if it's at least 
-eight characters. If it is a browser is redirected to the users profile page.
+The demo is a simple sign-in form and user profile that makes use of all the components. 
+
+To sign in enter a name and password. The password will be checked to see if it's at least 
+eight characters. If it is the user is redirected to the profile page.
 
 To run the Python demo
 
@@ -73,71 +104,82 @@ To run the Python demo
 
 Then open [http://localhost:8050](http://localhost:8050)
    
-## Building
+### Building Component Library
 
-To build the component source you must have python and node installed on 
-your computer.
+For VSCODE developers a development container definition is 
+available in *.devcontainer*. 
 
-Create and activate a clean python environment, then:
+#### Install tools manually
 
-```
-    pip install -r requirements.txt
-    npm install
+These steps are only needed if you intend to build the project directly
+on your computer. To build the project you must have python 
+and node installed on your computer. Then:
 
-    npm run build:lib
-    npm run build:py
-    npm run build-dist
+Create a virtual environment
 
 ```
+python3 -m venv .venv
+source  .venv/bin/activate
 
-## Debugging the javascript component source
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+#### Build the project
 
-A simple javascript demo `src\demo\index.html` is used to allow the javascript react to
-be debugged. To debug the component, breakpoints etc:
+Build the project:
 
-    npm run demo
+    npm run build
 
-Then, in VSCODE, select `Debug JS Demo` from the lunch options and press `F5` to launch the 
-Chrome debug configuration. You can now add breakpoints and single step through the javascript
-code in VSCODE.
+Create tarball, first change the release version in package.json, then:
 
-The jest tests also support debugging, launch `3. Jest All` or `5. Jest Current File` in VSCODE
+    python setup.py sdist bdist_wheel
 
-## Debugging the python demo `usage.py`
+The tarball is in *dist/dash_holoniq_components-<version>.tar.gz*
 
-In VSCODE select `Debug usage.py` from the lunch options and press `F5` to launch the 
+To install the tarball in a dash project:
+
+    pip install dash_holoniq_components-<version>.tar.gz
+
+#### Publish
+
+See [Create a production build and publish]
+
+    twine upload dist/*
+
+### Debugging the dash component JS source
+
+To debug/single-step the JS component code in conjunction with a dash application:
+
+In a terminal window start the dash application:
+
+    python -m examples.form.index
+
+Select debugger launch *1: JS Browser* and press F5. The chrome browser
+will open and display your application. Enter breakpoints in your source
+code eg *./src/lib/components/Location.react.js* as required.
+
+### Debugging the python demo `usage.py`
+
+In VSCODE select `2. Debug usage.py` from the launch options and press `F5` to launch the 
 Flask/Dash development server.
 
 Open [http://localhost:8050](http://localhost:8050)
 
 Set breakpoints as required.
 
-## Project
+### Examples
 
-The project skeleton was initially created with the cookiecutter template:
+**examples/multi_page** This is a clone of the [Structuring a Multi-Page App] with
+some added functionality.
 
-        cookiecutter  https://github.com/plotly/dash-component-boilerplate.git
+    python -m examples.multi_page.index
 
-This worked well, but for some reason the component doc strings did not show up
-in VSCODE intellisense. This is also a problem with the Dash HTML and CORE
-component libraries. The [dash-bootstrap-components](https://github.com/facultyai/dash-bootstrap-components)
-library plays well with VSCODE so the project now uses its build system.
+**examples/form** A minimal SPA application with *home page*, *login form* and *profile page*. 
+Demonstrates the use of the following dash-holoniq-components: *PageTitle*, *Location*, 
+*LayoutRouter*, *Alert*, *InputWithIcon*, *PasswordWithShow*, *Form*
+
+    python -m examples.form.index
 
 
-**Folder layout**
-
-```
-dash_holoniq_components     : build results output folder (npm run build-dist)
-demo                        : React/JS demo for debugging js (npm run demo)
-examples                    : Standalone python examples of component usage
-src                         : React.js source for components 
-    components              : dash holoniq components js source
-        __tests__           : jest tests and debugging (npm run test)
-usage.py                    : Dash/Flask python demo entry point
-utils                       : odds & sods to support usage.py
-```
-
-## Acknowledgment
-
-A big thankyou to the [dash-bootstrap-components](https://github.com/facultyai/dash-bootstrap-components)
-team. This projects layout and build system is a close copy of the one developed by them.
+[Structuring a Multi-Page App]: https://dash.plotly.com/urls
+[Create a production build and publish]: https://github.com/plotly/dash-component-boilerplate/blob/master/%7B%7Bcookiecutter.project_shortname%7D%7D/README.md#create-a-production-build-and-publish

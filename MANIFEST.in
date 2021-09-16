@@ -1,7 +1,12 @@
-include dash_holoniq_components/_components/dash_holoniq_components.min.js
-include dash_holoniq_components/_components/metadata.json
+include dash_holoniq_components/dash_holoniq_components.min.js
+include dash_holoniq_components/dash_holoniq_components.min.js.map
+include dash_holoniq_components/async-*.js
+include dash_holoniq_components/async-*.js.map
+include dash_holoniq_components/*-shared.js
+include dash_holoniq_components/*-shared.js.map
+include dash_holoniq_components/metadata.json
+include dash_holoniq_components/package-info.json
 include landing-page.md
 include README.md
 include LICENSE
 include package.json
-include usage.py
