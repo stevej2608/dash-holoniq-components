@@ -56,7 +56,7 @@
       "envFile": "${workspaceRoot}/.env",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
-      //"justMyCode": false
+      "justMyCode": false
     },
 
   ]
