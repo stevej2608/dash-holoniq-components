@@ -51,7 +51,12 @@ def page_layout():
 
     ])
 
+def create_app():
+    app.layout = page_layout()
+    return app
+
 def form_example():
+
     # Turn off werkzeug logging as it's very noisy
 
     aps_log = logging.getLogger('werkzeug')
@@ -59,7 +64,7 @@ def form_example():
 
     print('\nvisit http://default:8050/\n')
 
-    app.layout = page_layout()
+    app = create_app()
     app.run_server(host='0.0.0.0', debug=False, threaded=False, dev_tools_serve_dev_bundles=True)
 
 # python -m examples.form.index

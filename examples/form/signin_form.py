@@ -25,7 +25,7 @@ def formFields():
                 dhc.InputWithIcon(
                     value="",
                     type="name",
-                    id="name",
+                    id="user_name",
                     name="name",
                     autoComplete="name",
                     placeholder="Enter name",
@@ -48,7 +48,7 @@ def formFields():
             ]
         ),
         html.Div(
-            html.Button("Sign In", type="submit", disabled=False, className="btn btn-primary btn-block"),
+            html.Button("Sign In", id="form_signin_btn", type="submit", disabled=False, className="btn btn-primary btn-block"),
             className="form-group m-0",
         ),
     ]

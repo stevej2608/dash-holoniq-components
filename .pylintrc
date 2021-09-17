@@ -55,6 +55,17 @@ confidence=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 disable=print-statement,
+        # STJ
+        unexpected-keyword-arg,
+        protected-access,
+        dangerous-default-value,
+        unused-argument,
+        unused-variable,
+        using-constant-test,
+        global-statement,
+        redefined-outer-name,
+        relative-beyond-top-level,
+
         parameter-unpacking,
         unpacking-in-except,
         old-raise-syntax,

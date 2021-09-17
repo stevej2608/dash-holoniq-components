@@ -8,7 +8,7 @@ def layout():
 
     def signin():
         return html.Div([
-            dcc.Link('Signin', id='signin', href='/signin', className="btn btn-primary", refresh=False)
+            dcc.Link('Sign In', id='signin', href='/signin', className="btn btn-primary", refresh=False)
         ], className="col text-center")
 
     return html.Header([

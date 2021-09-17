@@ -39,5 +39,25 @@
         "action": "openExternally"
       }
     },
+
+    {
+      "name": "3. PyTest (Current file)",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "module": "pytest",
+      "args": [
+        "--headless",
+        "-sv",
+        "${file}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "env": {},
+      "envFile": "${workspaceRoot}/.env",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      //"justMyCode": false
+    },
+
   ]
 }

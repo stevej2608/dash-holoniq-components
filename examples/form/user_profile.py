@@ -33,7 +33,7 @@ def layout():
 
         def sign_out_button():
             hidden = False if user_profile.user_signed_in() else True
-            btn = html.Button('Signout', id='signout-btn', className="btn btn-primary", hidden=hidden)
+            btn = html.Button('Sign out', id='signout-btn', className="btn btn-primary", hidden=hidden)
             return html.Div([btn], className="col text-center")
 
         return html.Header([
