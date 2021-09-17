@@ -140,6 +140,17 @@ To install the tarball in a dash project:
 
     pip install dash_holoniq_components-<version>.tar.gz
 
+#### Testing
+
+Pytest and [Dash Duo](https://dash.plotly.com/testing) are used for testing. To run
+these tests both the Chrome browser and Chrome driver must be installed. These are
+allready installed in the VSCode Docker container. If you are note using remote containers
+you must be install them first.
+
+To run the tests:
+
+    pytest
+
 #### Publish
 
 See [Create a production build and publish]

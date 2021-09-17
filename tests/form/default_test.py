@@ -1,6 +1,8 @@
 
 from tests.form import USER_NAME, USER_PASSWORD
 
+# https://selenium-python.readthedocs.io/locating-elements.html
+
 def test_default_page(duo):
 
     # Render default page
@@ -16,10 +18,15 @@ def test_default_page(duo):
     assert result
 
 def test_form_submit_page(duo):
+
+    # Open the sign in form
+
     duo.server_url = duo.server_url + "/signin"
 
     result = duo.wait_for_text_to_equal("#form_signin_btn", "Sign In", timeout=20)
     assert result
+
+    # Enter user name & password
 
     name=duo.find_element("#user_name")
     name.send_keys(USER_NAME)
@@ -30,5 +37,16 @@ def test_form_submit_page(duo):
     btn = duo.find_element("#form_signin_btn")
     btn.click()
 
-    result = duo.wait_for_text_to_equal("#signout-btn", "Sign out", timeout=20)
+    # Confirm redirect to the user profile page
+
+    result = duo.wait_for_text_to_equal("#wellcome", USER_NAME, timeout=20)
     assert result
+
+    # Return to the form page
+
+    duo.driver.back()
+
+    # Confirm that the form fields are clear
+
+    assert duo.wait_for_text_to_equal("#user_name", "", timeout=20)
+    assert duo.wait_for_text_to_equal("#password", "", timeout=20)

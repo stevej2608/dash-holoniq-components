@@ -38,7 +38,7 @@ def layout():
 
         return html.Header([
             big_center("Welcome"),
-            big_center(user_profile.user),
+            big_center(user_profile.user, id='wellcome'),
             html.Br(),
             sign_out_button(),
         ], className='jumbotron my-4')
