@@ -1,6 +1,6 @@
 Package: dashHoloniqComponents
 Title: Custom components for Plotly Dash
-Version: 0.0.14-rc2
+Version: 0.0.14
 Description: Custom components for Plotly Dash
 Depends: R (>= 3.0.2)
 Imports: 
