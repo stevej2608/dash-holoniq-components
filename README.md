@@ -1,6 +1,8 @@
 ## Dash Holoniq Components
 
-The following components are available:
+A set of house-keeping components for [Dash][dash-homepage] that make the 
+implementation of forms and larger, multi-page applications a 
+little easier. The following components are available:
 
 **Alert** The Alert component is hidden if it has no children. When children are injected the Alert 
 component sets its style to become visible
@@ -103,6 +105,23 @@ To run the Python demo
         python usage.py
 
 Then open [http://localhost:8050](http://localhost:8050)
+
+### Examples
+
+**examples/multi_page** This is a clone of the [Structuring a Multi-Page App] with
+some added functionality.
+
+    python -m examples.multi_page.index
+
+**examples/form** A minimal SPA application with *home page*, *login form* and *profile page*. 
+Demonstrates the use of the following dash-holoniq-components: *PageTitle*, *Location*, 
+*LayoutRouter*, *Alert*, *InputWithIcon*, *PasswordWithShow*, *Form*
+
+    python -m examples.form.index
+
+**examples/checkbox_form** A form containing various checkbox examples.
+
+    python -m examples.form.checkbox_form
    
 ### Building Component Library
 
@@ -178,19 +197,6 @@ Open [http://localhost:8050](http://localhost:8050)
 
 Set breakpoints as required.
 
-### Examples
-
-**examples/multi_page** This is a clone of the [Structuring a Multi-Page App] with
-some added functionality.
-
-    python -m examples.multi_page.index
-
-**examples/form** A minimal SPA application with *home page*, *login form* and *profile page*. 
-Demonstrates the use of the following dash-holoniq-components: *PageTitle*, *Location*, 
-*LayoutRouter*, *Alert*, *InputWithIcon*, *PasswordWithShow*, *Form*
-
-    python -m examples.form.index
-
-
+[dash-homepage]: https://dash.plot.ly/
 [Structuring a Multi-Page App]: https://dash.plotly.com/urls
 [Create a production build and publish]: https://github.com/plotly/dash-component-boilerplate/blob/master/%7B%7Bcookiecutter.project_shortname%7D%7D/README.md#create-a-production-build-and-publish

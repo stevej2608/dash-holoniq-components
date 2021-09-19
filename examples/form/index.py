@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output
 
 import dash_holoniq_components as dhc
 
-from examples.form import default_page, user_page, signin_form, user_profile
+from examples.form import default_page, user_page, signin_form, checkbox_form, user_profile
 
 from app import app
 
@@ -19,9 +19,8 @@ def page_layout():
         'default': default_page(),
         'user' : user_page(),
         'signin' : signin_form(),
-
+        'checkbox' : checkbox_form(),
     }
-
 
     # Process browser location change. Select the page content based on the location
 

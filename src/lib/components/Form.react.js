@@ -32,6 +32,11 @@ class Form extends Component {
         obj[item.id] = item.checked;
         continue;
       }
+
+      if (item.type === 'radio') {
+        if (item.checked) obj[item.name] = item.value;
+        continue;
+      }
   
       if (item.name) obj[item.name] = item.value;
     }

@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 import dash_holoniq_components as dhc
 from dash import html
 
+from .common import form_container
 from app import app
 
 from .user_profile import user_profile
@@ -100,42 +101,13 @@ def layout():
 
         return redirect, form_fields, flash
 
-    return html.Div(
-        [
-            html.Div(
-                [
-                    dhc.Location(id="signin-redirect", refresh=False),
-                    html.Div(className="col-md-2"),
-                    html.Div(
-                        [
-                            html.Div(
-                                [
-                                    html.Div(
-                                        [
-                                            html.Br(),
-                                            html.H4("Sign In"),
-                                            html.Br(),
-                                            dhc.Form(formFields(), id="form", preventDefault=True),
-                                            html.Br(),
-                                        ],
-                                        className="card-body",
-                                    )
-                                ],
-                                className="card",
-                            )
-                        ],
-                        className="col-md-8",
-                    ),
-                    html.Div(className="col-md-2"),
-                ],
-                className="row",
-            )
-        ],
-        className="container-fluid",
-    )
+    redirect = dhc.Location(id="signin-redirect", refresh=False)
+    form = form_container("Sign In", formFields(), id="form")
+
+    return html.Div([redirect, form])
 
 #
-# python -m examples.signin_form
+# python -m examples.form.signin_form
 #
 # http://localhost:8050
 #
@@ -147,4 +119,4 @@ if __name__ == "__main__":
     aps_log.setLevel(logging.ERROR)
 
     app.layout = layout()
-    app.run_server(debug=False, threaded=False)
+    app.run_server(host='0.0.0.0', debug=False, threaded=False)
