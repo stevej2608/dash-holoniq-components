@@ -2,7 +2,13 @@
 
 A set of house-keeping components for [Dash][dash-homepage] that make the 
 implementation of forms and larger, multi-page applications a 
-little easier. The following components are available:
+little easier. 
+
+    pip install dash-holoniq-components
+
+### Components
+
+The following components are available:
 
 **Alert** The Alert component is hidden if it has no children. When children are injected the Alert 
 component sets its style to become visible
