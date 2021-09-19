@@ -1,4 +1,4 @@
-from utils import logging, log
+from utils import log
 
 from dash import html
 from dash.dependencies import Input, Output
@@ -54,17 +54,10 @@ def create_app():
     app.layout = page_layout()
     return app
 
-def form_example():
-
-    # Turn off werkzeug logging as it's very noisy
-
-    aps_log = logging.getLogger('werkzeug')
-    aps_log.setLevel(logging.ERROR)
-
-    print('\nvisit http://default:8050/\n')
+def form_example(port=8050):
 
     app = create_app()
-    app.run_server(host='0.0.0.0', debug=False, threaded=False, dev_tools_serve_dev_bundles=True)
+    app.run_server(host='0.0.0.0', port=port, debug=False, threaded=False, dev_tools_serve_dev_bundles=True)
 
 # python -m examples.form.index
 

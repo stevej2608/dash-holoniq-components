@@ -34,7 +34,7 @@
     "ms-python.vscode-pylance"
 	],
 
-  // "appPort": "8060:8060",
+  "appPort": "8060:8060",
   "postCreateCommand": "pip install -r requirements.txt && npm install",
 
   "workspaceFolder": "/workspace",

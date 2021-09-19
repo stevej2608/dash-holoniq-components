@@ -104,6 +104,8 @@ To run the Python demo
 
         python usage.py
 
+        python usage.py --port 8060
+
 Then open [http://localhost:8050](http://localhost:8050)
 
 ### Examples

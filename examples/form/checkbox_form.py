@@ -20,8 +20,8 @@ def formFields():
             dbc.Label("Radio Item - choose one"),
             dbc.RadioItems(name="radio-item",
                 options=[
-                    {"label": "Option 1", "value": 1},
-                    {"label": "Option 2", "value": 2},
+                    {"label": "Option 1", "value": 1, "input_id": "rad1"},
+                    {"label": "Option 2", "value": 2, "input_id": "rad2"},
                     {"label": "Disabled Option", "value": 3, "disabled": True},
                 ],
                 value=1,
@@ -34,8 +34,8 @@ def formFields():
             dbc.Label("Checklist - choose a bunch"),
             dbc.Checklist(
                 options=[
-                    {"label": "Option 1", "value": 1, "input_id": "opt1"},
-                    {"label": "Option 2", "value": 2, "input_id": "opt2"},
+                    {"label": "Option 1", "value": 1, "input_id": "chk1"},
+                    {"label": "Option 2", "value": 2, "input_id": "chk2"},
                     {"label": "Disabled Option", "value": 3, "input_id": "opt3", "disabled": True},
                 ],
                 value=[1],
@@ -48,8 +48,8 @@ def formFields():
             dbc.Label("Checklist - toggle a bunch"),
             dbc.Checklist(
                 options=[
-                    {"label": "Option 1", "value": 1, "input_id": "toggle1"},
-                    {"label": "Option 2", "value": 2, "input_id": "toggle2"},
+                    {"label": "Option 1", "value": 1, "input_id": "tog1"},
+                    {"label": "Option 2", "value": 2, "input_id": "tog2"},
                     {"label": "Disabled Option", "value": 3,"input_id": "toggle3", "disabled": True},
                 ],
                 value=[1],
@@ -68,7 +68,7 @@ def formFields():
 
 def layout():
 
-    @app.callback(Output("report", "children"),Input("form", "form_data"))
+    @app.callback(Output("report", "children"),Input("checkbox-form", "form_data"))
     def _callback(form_data):
         report = NOUPDATE
 
@@ -86,14 +86,14 @@ def layout():
 #
 # python -m examples.form.checkbox_form
 #
-# http://localhost:8050
+# http://localhost:8060
 #
 
 if __name__ == "__main__":
-    print("\nvisit: http://localhost:8050\n")
+    print("\nvisit: http://localhost:8060\n")
 
     aps_log = logging.getLogger("werkzeug")
     aps_log.setLevel(logging.ERROR)
 
     app.layout = layout()
-    app.run_server(host='0.0.0.0', debug=False, threaded=False)
+    app.run_server(host='0.0.0.0', port=8060, debug=False, threaded=False)
