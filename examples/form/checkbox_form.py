@@ -1,0 +1,99 @@
+import json
+import dash
+from dash import html
+from utils import logging
+from dash.dependencies import Input, Output
+
+import dash_bootstrap_components as dbc
+
+from app import app
+from .common import form_container
+
+NOUPDATE = dash.no_update
+
+def formFields():
+
+    # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/
+
+    radioitems = dbc.FormGroup(
+        [
+            dbc.Label("Radio Item - choose one"),
+            dbc.RadioItems(name="radio-item",
+                options=[
+                    {"label": "Option 1", "value": 1},
+                    {"label": "Option 2", "value": 2},
+                    {"label": "Disabled Option", "value": 3, "disabled": True},
+                ],
+                value=1,
+            ),
+        ]
+    )
+
+    checklist = dbc.FormGroup(
+        [
+            dbc.Label("Checklist - choose a bunch"),
+            dbc.Checklist(
+                options=[
+                    {"label": "Option 1", "value": 1, "input_id": "opt1"},
+                    {"label": "Option 2", "value": 2, "input_id": "opt2"},
+                    {"label": "Disabled Option", "value": 3, "input_id": "opt3", "disabled": True},
+                ],
+                value=[1],
+            ),
+        ]
+    )
+
+    switches = dbc.FormGroup(
+        [
+            dbc.Label("Checklist - toggle a bunch"),
+            dbc.Checklist(
+                options=[
+                    {"label": "Option 1", "value": 1, "input_id": "toggle1"},
+                    {"label": "Option 2", "value": 2, "input_id": "toggle2"},
+                    {"label": "Disabled Option", "value": 3,"input_id": "toggle3", "disabled": True},
+                ],
+                value=[1],
+                switch=True,
+            ),
+        ]
+    )
+
+    button = html.Div(
+        html.Button("Submit", id="form_submit", type="submit", disabled=False, className="btn btn-primary btn-block"),
+        className="form-group m-0",
+    )
+
+    return [radioitems, checklist, switches, button]
+
+
+def layout():
+
+    @app.callback(Output("report", "children"),Input("form", "form_data"))
+    def _callback(form_data):
+        report = NOUPDATE
+
+        if form_data:
+            del form_data['submit_count']
+            values = {'form_data': form_data}
+            report = json.dumps(values, sort_keys=True, indent=2)
+
+        return report
+
+    form = form_container("Check box examples", formFields(), id="checkbox-form")
+    return html.Div([form, html.H4(id='report')
+    ])
+
+#
+# python -m examples.form.checkbox_form
+#
+# http://localhost:8050
+#
+
+if __name__ == "__main__":
+    print("\nvisit: http://localhost:8050\n")
+
+    aps_log = logging.getLogger("werkzeug")
+    aps_log.setLevel(logging.ERROR)
+
+    app.layout = layout()
+    app.run_server(host='0.0.0.0', debug=False, threaded=False)
