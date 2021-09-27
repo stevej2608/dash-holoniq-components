@@ -2,7 +2,7 @@
 name = "DashHoloniqComponents"
 uuid = "1b08a953-4be3-4667-9a23-9c4bff7bd7c1"
 authors = ["Steve Jones <jonesst2608@gmail.com>"]
-version = "0.0.14"
+version = "0.0.16"
 
 [deps]
 Dash = "1b08a953-4be3-4667-9a23-3db579824955"
