@@ -1,7 +1,12 @@
 
 from tests.form import USER_NAME, USER_PASSWORD
 
+# Headless browser tests. Pytest setup, see tests/conftest.py, creates 
+# an instance of examples/form. The following tests navigate 
+# to a specific page and use the selenium driver to interact with th UI
+#
 # https://selenium-python.readthedocs.io/locating-elements.html
+
 
 def test_alert_component(duo):
 
