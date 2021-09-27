@@ -27,18 +27,20 @@ class Form extends Component {
       const item  = elements.item(i);
 
       if (!item) continue;
+
+      const name = item.name || item.id
   
       if (item.type === 'checkbox') {
-        obj[item.id] = item.checked;
+        obj[name] = item.checked;
         continue;
       }
 
       if (item.type === 'radio') {
-        if (item.checked) obj[item.name] = item.value;
+        if (item.checked) obj[name] = item.value;
         continue;
       }
   
-      if (item.name) obj[item.name] = item.value;
+      if (item.name) obj[name] = item.value;
     }
 
     return obj;
