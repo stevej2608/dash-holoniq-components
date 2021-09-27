@@ -67,12 +67,13 @@ _js_dist.extend(
     [
         {
             'relative_package_path': 'dash_holoniq_components.min.js',
-    
+            'dev_package_path': 'dash_holoniq_components.dev.js',
             'namespace': package_name
         },
         {
             'relative_package_path': 'dash_holoniq_components.min.js.map',
-    
+            'dev_package_path': 'dash_holoniq_components.dev.js.map',
+
             'namespace': package_name,
             'dynamic': True
         }
