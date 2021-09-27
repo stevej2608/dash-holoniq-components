@@ -7,7 +7,7 @@ import dash_holoniq_components as dhc
 
 from examples.form import default_page, user_page, signin_form, checkbox_form, user_profile
 
-from app import app
+from app import app, serve_app
 
 # Return static layout common to all pages
 
@@ -54,12 +54,8 @@ def create_app():
     app.layout = page_layout()
     return app
 
-def form_example(port=8050):
-
-    app = create_app()
-    app.run_server(host='0.0.0.0', port=port, debug=False, threaded=False, dev_tools_serve_dev_bundles=True)
-
 # python -m examples.form.index
 
 if __name__ == '__main__':
-    form_example()
+    app = create_app()
+    serve_app(app, '/checkbox')

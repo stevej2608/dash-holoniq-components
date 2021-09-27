@@ -1,6 +1,7 @@
 from sys import argv
 from utils import logging, log
-from examples.form.index import form_example
+from examples.form.index import create_app
+from app import serve_app
 
 try:
     index = argv.index('--port')
@@ -12,10 +13,5 @@ print(f' * Visit http://default:{port}')
 
 
 if __name__ == '__main__':
-
-    # Turn off werkzeug logging as it's very noisy
-
-    aps_log = logging.getLogger('werkzeug')
-    aps_log.setLevel(logging.ERROR)
-
-    form_example(port)
+    app = create_app()
+    serve_app(app)

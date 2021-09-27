@@ -6,6 +6,11 @@
 		"dockerfile": "Dockerfile",
 	},
 
+  "containerEnv": {
+    "HOST_HOSTNAME": "default",
+    "HOST_HOSTPORT": "8060"
+  },
+
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
 		"python.pythonPath": "/usr/local/bin/python",
@@ -35,7 +40,7 @@
 	],
 
   "appPort": "8060:8060",
-  "postCreateCommand": "pip install -r requirements.txt && npm install",
+  "postCreateCommand": "pip install pylint && pip install -r requirements.txt && npm install",
 
   "workspaceFolder": "/workspace",
 	"workspaceMount": "source=/workspaces/${localWorkspaceFolderBasename},target=/workspace,type=bind,consistency=cached",
