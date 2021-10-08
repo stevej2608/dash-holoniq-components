@@ -1,5 +1,5 @@
-include dash_holoniq_components/dash_holoniq_components.min.js
-include dash_holoniq_components/dash_holoniq_components.min.js.map
+include dash_holoniq_components/*.js
+include dash_holoniq_components/*.map
 include dash_holoniq_components/async-*.js
 include dash_holoniq_components/async-*.js.map
 include dash_holoniq_components/*-shared.js
