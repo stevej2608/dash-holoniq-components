@@ -15,8 +15,7 @@ def formFields():
 
     # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/
 
-    radioitems = dbc.FormGroup(
-        [
+    radioitems = html.Div([
             dbc.Label("Radio Item - choose one"),
             dbc.RadioItems(name="radio-item",
                 options=[
@@ -26,11 +25,9 @@ def formFields():
                 ],
                 value=1,
             ),
-        ]
-    )
+        ], className='mb-3')
 
-    checklist = dbc.FormGroup(
-        [
+    checklist = html.Div([
             dbc.Label("Checklist - choose a bunch"),
             dbc.Checklist(
                 options=[
@@ -39,12 +36,10 @@ def formFields():
                     {"label": "Disabled Option", "value": 3, "input_id": "opt3", "disabled": True},
                 ],
                 value=[1],
-            ),
-        ]
-    )
+            )
+        ], className='mb-3')
 
-    switches = dbc.FormGroup(
-        [
+    switches = html.Div([
             dbc.Label("Checklist - toggle a bunch"),
             dbc.Checklist(
                 options=[
@@ -54,9 +49,8 @@ def formFields():
                 ],
                 value=[1],
                 switch=True,
-            ),
-        ]
-    )
+            )
+        ], className='mb-3')
 
     button = html.Div(
         html.Button("Submit", id="form_submit", type="submit", disabled=False, className="btn btn-primary btn-block"),

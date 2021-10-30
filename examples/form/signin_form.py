@@ -20,8 +20,7 @@ Shows the Alert, InputWithIcon, PasswordWithShow and Form components
 def formFields():
     return [
         dhc.Alert(id="flash", className="alert alert-danger", role="alert"),
-        dbc.FormGroup(
-            [
+        html.Div([
                 dbc.Label("Name"),
                 dhc.InputWithIcon(
                     value="",
@@ -33,10 +32,8 @@ def formFields():
                     icon="fa fa-user",
                     tooltip="Hello Big Joe",
                 ),
-            ]
-        ),
-        dbc.FormGroup(
-            [
+            ], className='mb-3'),
+        html.Div([
                 dbc.Label("Password"),
                 dhc.PasswordWithShow(
                     value="",
@@ -46,8 +43,7 @@ def formFields():
                     placeholder="Enter password",
                     tooltip="Hide/Show password",
                 ),
-            ]
-        ),
+            ], className='mb-3'),
         html.Div(
             html.Button("Sign In", id="form_signin_btn", type="submit", disabled=False, className="btn btn-primary btn-block"),
             className="form-group m-0",
