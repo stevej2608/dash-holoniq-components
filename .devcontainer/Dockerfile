@@ -1,14 +1,16 @@
-FROM nikolaik/python-nodejs:python3.8-nodejs12
+FROM python:3.8-buster
 
 RUN useradd -ms /bin/bash vscode
 
-# Install github cli
-# https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+# Install nodejs 12
+# https://computingforgeeks.com/how-to-install-nodejs-on-ubuntu-debian-linux-mint/
 
-RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-RUN apt update 
-RUN apt-get install gh
+RUN apt update && \
+    apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
+    apt -y install nodejs
+
+# RUN apt-get update && apt-get install -y build-essential g++ libx11-dev libxkbfile-dev libsecret-1-dev
 
 # install chrome for scraper
 
