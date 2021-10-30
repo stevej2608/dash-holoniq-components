@@ -1,6 +1,6 @@
 {
   "name": "dash_holoniq_components",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Custom components for Plotly Dash",
   "main": "build/index.js",
   "scripts": {
