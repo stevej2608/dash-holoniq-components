@@ -8,6 +8,7 @@ import ButtonLink from './components/ButtonLink.react';
 import Location from './components/Location.react'
 import Alert from './components/Alert.react'
 import PageTitle from './components/PageTitle.react'
+import Button from './components/Button.react'
 
 export {
     Form,
