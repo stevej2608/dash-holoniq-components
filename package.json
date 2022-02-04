@@ -1,8 +1,9 @@
 {
   "name": "dash_holoniq_components",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Custom components for Plotly Dash",
   "main": "build/index.js",
+  "homepage": "https://github.com/stevej2608/dash-holoniq-components",
   "scripts": {
     "start": "webpack-serve --config ./webpack.serve.config.js --open",
     "validate-init": "python _validate_init.py",

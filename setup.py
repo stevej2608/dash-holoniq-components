@@ -18,6 +18,7 @@ setup(
     version=package["version"],
     author=package['author'],
     packages=find_packages(),
+    url = 'https://github.com/stevej2608/dash-holoniq-components',
     install_requires=["dash>=2.0.0", "dash-bootstrap-components>=0.13.0"],
     include_package_data=True,
     license=package['license'],
@@ -26,5 +27,5 @@ setup(
     long_description_content_type="text/markdown",
     classifiers = [
         'Framework :: Dash',
-    ],    
+    ],
 )
