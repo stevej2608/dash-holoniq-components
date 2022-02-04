@@ -18,5 +18,6 @@ export {
     ButtonLink,
     Location,
     Alert,
-    PageTitle
+    PageTitle,
+    Button
 };

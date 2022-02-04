@@ -16,10 +16,20 @@ const Button = (props) => {
 
     return (
         <button
+
             onClick={() => props.setProps({
                 n_clicks: props.n_clicks + 1,
                 n_clicks_timestamp: Date.now()
             })}
+
+            onFocus={() => props.setProps({
+              focus: true
+            })}
+
+            onBlur={() => props.setProps({
+              focus: false
+            })}
+
             {...omit(['n_clicks', 'n_clicks_timestamp', 'loading_state', 'setProps'], props)}
             {...dataAttributes}
         >
@@ -51,6 +61,13 @@ Button.propTypes = {
      * that this element has been clicked on.
      */
     'n_clicks': PropTypes.number,
+
+    /**
+     * A boolean that is set true when the button gains focus and
+     * false when it looses it.
+     */
+
+    'focus': PropTypes.bool,
 
     /**
      * An integer that represents the time (in ms since 1970)
