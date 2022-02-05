@@ -12,7 +12,7 @@
   },
 
 	// Set *default* container specific settings.json values on container create.
-	"settings": { 
+	"settings": {
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.languageServer": "Pylance",
 		"python.linting.enabled": true,
@@ -28,11 +28,11 @@
 		"python.linting.pylintPath": "~/.local/bin/pylint"
 	},
 
- 
+
   "runArgs": [
     "--name=${localWorkspaceFolderBasename}"
   ],
-  
+
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
     "ms-python.python",
@@ -43,6 +43,6 @@
   "postCreateCommand": "pip install pylint && pip install -r requirements.txt && npm install",
 
   "workspaceFolder": "/workspace",
-	"workspaceMount": "source=/workspaces/${localWorkspaceFolderBasename},target=/workspace,type=bind,consistency=cached",
+	"workspaceMount": "source=/workspaces/github/${localWorkspaceFolderBasename},target=/workspace,type=bind,consistency=cached",
 
 }
