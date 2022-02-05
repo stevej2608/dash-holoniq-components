@@ -48,7 +48,12 @@
     "terser-webpack-plugin": "^2.3.0",
     "webpack": "4.36.1",
     "webpack-cli": "3.3.6",
-    "webpack-serve": "3.1.0"
+    "webpack-serve": "3.1.0",
+    "glob-parent": ">=5.1.2",
+    "nanoid": ">=3.1.31",
+    "json-schema": ">=0.4.0",
+    "postcss": ">=8.2.13",
+    "ansi-regex": ">=5.0.1"
   },
   "engines": {
     "node": ">=8.11.0",
